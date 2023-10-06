@@ -8,16 +8,16 @@ CREATE DATABASE session_database;
 -- Таблица со стипендиями
 CREATE TABLE scholarships (
     s_id INTEGER PRIMARY KEY,
-    s_type TEXT NOT NULL,
-    s_name TEXT NOT NULL UNIQUE,
+    s_type VARCHAR(200) NOT NULL,
+    s_name VARCHAR(200) NOT NULL,
 );
 
 -- Таблица со студентами
 CREATE TABLE students (
     s_record_book INTEGER PRIMARY KEY,
-    s_first_name TEXT NOT NULL,
-    s_last_name TEXT NOT NULL,
-    s_patronymic TEXT,
+    s_first_name VARCHAR NOT NULL,
+    s_last_name VARCHAR NOT NULL,
+    s_patronymic VARCHAR,
     s_course INTEGER
 );
 
