@@ -4,42 +4,41 @@ CREATE DATABASE session_database;
 
 -- ТАБЛИЦЫ БЕЗ ВНЕШНИХ КЛЮЧЕЙ ------------------------
 
--- DONE
 -- Таблица со стипендиями
 CREATE TABLE scholarships (
     s_id INTEGER PRIMARY KEY,
-    s_type VARCHAR(200) NOT NULL,
-    s_name VARCHAR(200) NOT NULL,
+    s_type VARCHAR(100) NOT NULL,
+    s_name VARCHAR(100) NOT NULL,
 );
 
 -- Таблица со студентами
 CREATE TABLE students (
     s_record_book INTEGER PRIMARY KEY,
-    s_first_name VARCHAR NOT NULL,
-    s_last_name VARCHAR NOT NULL,
-    s_patronymic VARCHAR,
+    s_first_name VARCHAR(50) NOT NULL,
+    s_last_name VARCHAR(50) NOT NULL,
+    s_patronymic VARCHAR(50),
     s_course INTEGER
 );
 
 -- Таблица с площадками института
 CREATE TABLE sites (
-    s_name TEXT PRIMARY KEY,
-    s_address TEXT NOT NULL
+    s_name VARCHAR(100) PRIMARY KEY,
+    s_address VARCHAR(100) NOT NULL
 );
 
 -- Таблица с преподавателями
 CREATE TABLE teachers (
     t_id INTEGER PRIMARY KEY,
-    t_first_name TEXT NOT NULL,
-    t_last_name TEXT NOT NULL,
-    t_patronymic TEXT,
-    t_position TEXT NOT NULL
+    t_first_name VARCHAR(50) NOT NULL,
+    t_last_name VARCHAR(50) NOT NULL,
+    t_patronymic VARCHAR(50),
+    t_position VARCHAR(100) NOT NULL
 );
 
 -- Таблица с дисциплинами
 CREATE TABLE disciplines (
     d_code INTEGER PRIMARY KEY,
-    d_name TEXT NOT NULL,
+    d_name VARCHAR(50) NOT NULL,
     d_hours INTEGER NOT NULL,
     d_lecture_hours INTEGER NOT NULL,
     d_practical_hours INTEGER NOT NULL,
@@ -49,14 +48,14 @@ CREATE TABLE disciplines (
 -- Таблица с направлениями
 CREATE TABLE directions (
     d_code INTEGER PRIMARY KEY,
-    d_name TEXT NOT NULL,
-    d_qualification TEXT NOT NULL
+    d_name VARCHAR(50) NOT NULL,
+    d_qualification VARCHAR(100) NOT NULL
 );
 
 -- Таблица с подразделениями
 CREATE TABLE divisions (
     d_code INTEGER PRIMARY KEY,
-    d_name TEXT NOT NULL
+    d_name VARCHAR(50) NOT NULL
 );
 
 -- ТАБЛИЦЫ С ВНЕШНИМИ КЛЮЧАМИ ------------------------
@@ -64,8 +63,8 @@ CREATE TABLE divisions (
 -- Таблица с аудиториями
 CREATE TABLE auditoriums (
     a_id INTEGER PRIMARY KEY,
-    a_site_name TEXT NOT NULL,
-    a_type TEXT NOT NULL,
+    a_site_name VARCHAR(50) NOT NULL,
+    a_type VARCHAR(50) NOT NULL,
     a_number INTEGER NOT NULL,
     FOREIGN KEY (a_site_name) REFERENCES sites (s_name)
 );
@@ -73,10 +72,10 @@ CREATE TABLE auditoriums (
 -- Таблица с образовательными программами
 CREATE TABLE educational_programmes (
     ep_code INTEGER PRIMARY KEY,
-    ep_name TEXT NOT NULL,
+    ep_name VARCHAR(100) NOT NULL,
     ep_division_code INTEGER NOT NULL,
     ep_direction_code INTEGER NOT NULL,
-    ep_format TEXT NOT NULL
+    ep_format VARCHAR(50) NOT NULL
     FOREIGN KEY (ep_division_code) REFERENCES divisions (d_code),
     FOREIGN KEY (ep_direction_code) REFERENCES directions (d_code)
 );
@@ -92,7 +91,7 @@ CREATE TABLE curricula (
 -- Таблица с учебными группами
 CREATE TABLE study_groups (
     sg_code INTEGER PRIMARY KEY,
-    sg_number TEXT NOT NULL,
+    sg_number VARCHAR(50) NOT NULL,
     sg_curriculum_code INTEGER NOT NULL,
     sg_from DATE NOT NULL,
     sg_to DATA,
@@ -131,7 +130,7 @@ CREATE TABLE disciplines_in_curricula (
 
 -- Таблица с подразделениями на площадках
 CREATE TABLE divisions_on_sites (
-    dos_site_name TEXT PRIMARY KEY,
+    dos_site_name VARCHAR(100) PRIMARY KEY,
     dos_division_code INTEGER PRIMARY KEY,
     FOREIGN KEY (dos_site_name) REFERENCES sites (s_name),
     FOREIGN KEY (dos_division_code) REFERENCES divisions (d_code)
@@ -144,7 +143,7 @@ CREATE TABLE attestations (
     a_student_record_book INTEGER NOT NULL,
     a_attempt INTEGER NOT NULL,
     a_semester INTEGER NOT NULL,
-    a_grade TEXT NOT NULL,
+    a_grade VARCHAR(10) NOT NULL,
     a_teacher_id INTEGER NOT NULL,
     FOREIGN KEY (a_discipline_in_curricula_code) REFERENCES disciplines_in_curricula (dic_code),
     FOREIGN KEY (a_student_record_book) REFERENCES students (s_record_book),
